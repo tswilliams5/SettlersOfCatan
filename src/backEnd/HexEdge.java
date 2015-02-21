@@ -1,7 +1,6 @@
 package backEnd;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -9,31 +8,38 @@ import java.util.List;
  */
 public class HexEdge {
 
-    public Hex rightHex;
-    public Hex leftHex;
-    public Hex northHex;
-    public Hex southHex;
-    public boolean hasRoad = false;
-    public Player owner = null;
-    public HexIntersect northEnd;
-    public HexIntersect southEnd;
-    private List<HexEdge> adjacentEdges;
+    private Hex onlyHex = null;
+    private int coastalNumber;
 
-    public static HashSet<HexEdge> allHexEdges;
+    private Hex rightHex = null;
+    private Hex leftHex = null;
+    private Hex northHex;
+    private Hex southHex;
+    private boolean hasRoad = false;
+    private Player owner = null;
+    private HexIntersect northEnd;
+    private HexIntersect southEnd;
+    private List<HexEdge> connectedEdges;
+
+    /**
+     * this constructor is for hex's on the coast
+     * @param onlyHex land hex which the edge lies on
+     * @param coastalNumber how many edges of the onlyHex along clockwise the hes edge is
+     */
+    public HexEdge(Hex onlyHex, int coastalNumber) {
+        this.onlyHex = onlyHex;
+        this.coastalNumber = coastalNumber;
+    }
 
     public HexEdge(Hex rightHex, Hex leftHex) {
         this.rightHex = rightHex;
         this.leftHex = leftHex;
-        if (!allHexEdges.contains(this)) {
-            allHexEdges.add(this);
-        } else {
-            System.out.println("This hex edge already exists"); // to do: needs revising, make it so that when a board is created, all of the hex edges and intersections are created
-        }
-        this.setAdjacentEdges(calculateAdjacentEdges());
+        this.setConnectedEdges(calculateAdjacentEdges());
     }
 
     public List<HexEdge> calculateAdjacentEdges() {
 
+        //needs reviewing
         List<HexEdge> adjacentEdges = new ArrayList<>();
         for (Hex adjacentHex : this.getNorthEnd().getAdjacentHexs()) {
             if (this.getLeftHex() != adjacentHex && this.getRightHex() != adjacentHex) {
@@ -58,7 +64,7 @@ public class HexEdge {
 
     public static HexEdge findOne(Hex rightHex, Hex leftHex) {
         HexEdge theHexEdge = null;
-        for (HexEdge hexEdge : allHexEdges) {
+        for (HexEdge hexEdge : alledges) {
             if (hexEdge.getRightHex() == rightHex && hexEdge.getLeftHex() == leftHex) {
                 theHexEdge = hexEdge;
             }
@@ -133,15 +139,27 @@ public class HexEdge {
         this.southEnd = southEnd;
     }
 
-    public List<HexEdge> getAdjacentEdges() {
-        return adjacentEdges;
+    public List<HexEdge> getConnectedEdges() {
+        return connectedEdges;
     }
 
-    public void setAdjacentEdges(List<HexEdge> adjacentEdges) {
-        this.adjacentEdges = adjacentEdges;
+    public void setConnectedEdges(List<HexEdge> connectedEdges) {
+        this.connectedEdges = connectedEdges;
     }
 
-    public static HashSet<HexEdge> getAllHexEdges() {
-        return allHexEdges;
+    public Hex getOnlyHex() {
+        return onlyHex;
+    }
+
+    public void setOnlyHex(Hex onlyHex) {
+        this.onlyHex = onlyHex;
+    }
+
+    public int getCoastalNumber() {
+        return coastalNumber;
+    }
+
+    public void setCoastalNumber(int coastalNumber) {
+        this.coastalNumber = coastalNumber;
     }
 }

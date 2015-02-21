@@ -1,6 +1,5 @@
 package backEnd;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -82,7 +81,7 @@ public class Player {
             hasLocalTerritory = true;
         }
         if (!hasLocalTerritory) {
-            List<HexEdge> adjacentEdges = hexEdge.getAdjacentEdges();
+            List<HexEdge> adjacentEdges = hexEdge.getConnectedEdges();
             for (HexEdge viableRoad : adjacentEdges) {
                 if (viableRoad.getOwner() == this) {
                     hasLocalTerritory = true;
@@ -97,9 +96,6 @@ public class Player {
         if (!this.inInitialSetUp) {
             int[] cost = {1, 0, 0, 1, 0};
             canAfford = this.checkFunds(cost);
-
-        } else {
-            canAfford = true;
         }
         conditionsToErrors.put(hasLocalTerritory, this.getName() + " does not have surrounding territory");
         conditionsToErrors.put(hasRoads, this.getName() + " has ran out of roads");

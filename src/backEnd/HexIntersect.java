@@ -48,4 +48,12 @@ public class HexIntersect {
     public void setOwner(Player owner) {
         this.owner = owner;
     }
+
+    public List<HexIntersect> getNearestHexIntersects() {
+        return nearestHexIntersects;
+    }
+
+    public void setNearestHexIntersects(List<HexIntersect> nearestHexIntersects) {
+        this.nearestHexIntersects = nearestHexIntersects;
+    }
 }

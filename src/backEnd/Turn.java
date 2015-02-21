@@ -19,6 +19,7 @@ public class Turn {
         this.players = players;
     }
 
+    //needs work
     public void haveTurn() {
         player.setIsTurn(true);
         if (!player.isInInitialSetUp()) {
@@ -34,7 +35,7 @@ public class Turn {
 
     public void haveTurns() {
         for (int i = 0; i < players.size(); i++) {
-            players = new ArrayList<Player>();
+            players = new ArrayList<>();
             //start with player 1,
             //make then have a turn
             players.get(i).haveTurn();
